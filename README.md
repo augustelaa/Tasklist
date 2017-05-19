@@ -5,6 +5,7 @@ Este repositório contempla uma task list com frontend em Angular 2 e um backend
 ## Instalando o frontend
 
 cd ./client/
+
 npm install
 
 ## Rodando a aplicação
