@@ -10,25 +10,26 @@ import { TasksService } from './tasks.service';
 export class TasksComponent implements OnInit {
 
   tasks: Task[] = [];
+  task: Task;
+  busy: Boolean;
   
   constructor(public tasksService: TasksService) {  }
 
-  ngOnInit() {
+  ngOnInit() { 
+    this.retornarTasks(); 
+    this.task = new Task(); 
+    this.busy = false;
+  }
 
-    this.retornarTasks();
-
-    /*this.task.titulo = 'Angular';
-    this.task.descricao = 'Testanr o Angular';
-    this.task.situacao = true;*/
-
-    //this.tasksService.adicionarTask(this.task).subscribe(res => { console.log(res); });
-
-    //
-
-    /*this.tasksService.retornarTask(2).subscribe(data => {
-      console.log(data);
-    })*/
-
+  adicionarTask(form){
+    this.busy = true;
+    this.tasksService.adicionarTask(this.task).subscribe(res => { 
+      if(res.status == "ok"){
+        this.retornarTasks();
+        this.task = new Task();
+        this.busy = false;
+      } 
+    });
   }
 
   retornarTasks(){

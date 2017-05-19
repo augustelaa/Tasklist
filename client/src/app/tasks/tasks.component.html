@@ -1,11 +1,11 @@
-<table class="table">
+<table class="table table-hover">
   <caption>Lista de tarefas:</caption>
   <thead>
     <tr>
       <th>#</th>
       <th>Título</th>
       <th>Descrição</th>
-      <th>Criação</th>
+      <th>Período</th>
       <th class=""></th>
       <th></th>
       <th></th>
@@ -15,11 +15,23 @@
     <tr [class.success]="task.situacao == true">
       <th scope="row">{{task.codigo}}</th>
       <td class="col-md-2">{{task.titulo}}</td>
-      <td class="col-md-5">{{task.descricao}}</td>
-      <td class="col-md-3">{{task.dataHoraCriacao}}</td>
+      <td class="col-md-4">{{task.descricao}}</td>
+      <td class="col-md-3">{{task.dataHoraCriacao}} - {{task.dataHoraEncerramento}}</td>
       <td class="col-md-1"><button (click)="alterarSituacaoTask(task)" type="button" class="btn btn-sm" [class.btn-warning]="task.situacao == true" [class.btn-success]="task.situacao == false"><i class="glyphicon" [class.glyphicon-refresh]="task.situacao == true" [class.glyphicon-ok]="task.situacao == false"></i></button></td>
       <td class="col-md-1"><button type="button" class="btn btn-info btn-sm"><i class="glyphicon glyphicon-pencil"></i></button></td>
       <td class="col-md-1"><button (click)="removerTask(task.codigo)" type="button" class="btn btn-danger btn-sm"><i class="glyphicon glyphicon-ban-circle"></i></button></td>
     </tr>
   </tbody>
 </table>
+
+<form #f="ngForm" (ngSubmit)="adicionarTask(f)" novalidate>
+  <div class="form-group">
+    <label for="titulo">Título</label>
+    <input type="text" class="form-control" name="titulo" id="titulo" placeholder="Qual o título da tarefa?" [(ngModel)]="task.titulo">
+  </div>
+  <div class="form-group">
+    <label for="descricao">Descrição</label>
+    <textarea id="descricao" name="descricao" placeholder="Quais as informações da tarefa?" class="form-control" rows="3" [(ngModel)]="task.descricao"></textarea>
+  </div>
+  <button type="submit" class="btn btn-info" [disabled]="busy">Adicionar</button>
+</form>
