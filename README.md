@@ -1,13 +1,20 @@
 # TaskList
 
-Este repositório contempla uma task list com frontend em Angular 2 e um backend Laravel para realizar as chamadas REST API.
+Este repositório contempla uma task list com frontend em Angular 2 e um backend Laravel para realizar as chamadas da API REST.
 
-## Instalando o frontend (Build)
+## Instalando o frontend
 
 cd ./client/
 npm install
+
+## Rodando a aplicação
+
+npm start
+
+## Gerando build da aplicação
+
 ng build --prod
-ng serve
 
 ## Demonstração
+
 [tasklist.ahcnetworking.com.br](http://tasklist.ahcnetworking.com.br)
