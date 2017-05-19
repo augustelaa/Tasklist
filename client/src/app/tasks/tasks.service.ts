@@ -24,10 +24,6 @@ private extractData(res) {
     return this.http.get(this.backend_url).map(this.extractData);
   }
 
-  retornarTask(codigo: Number): Observable<any> {
-    return this.http.get(this.backend_url + '/' + codigo).map(this.extractData);
-  }
-
   adicionarTask(task: Task): Observable<any> {
     let options = JSON.stringify({ titulo: task.titulo, descricao: task.descricao, situacao: task.situacao });
     return this.http.post(this.backend_url, options).map(this.extractData);

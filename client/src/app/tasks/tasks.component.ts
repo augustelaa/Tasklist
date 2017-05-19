@@ -11,7 +11,7 @@ export class TasksComponent implements OnInit {
 
   tasks: Task[] = []; // responsável por alimentar a lista de tarefas
   task: Task; // responsável por transportar os dados do form de adição
-  busy: Boolean; // responsável por habilitar/desabilitar submit do form de adição (evitar duplo envio)
+  busy: boolean; // responsável por habilitar/desabilitar submit do form de adição (evitar duplo envio)
   
   constructor(public tasksService: TasksService) {  }
 
@@ -21,9 +21,9 @@ export class TasksComponent implements OnInit {
     this.busy = false;
   }
 
-  adicionarTask(form){
+  adicionarTask(_task: Task){
     this.busy = true;
-    this.tasksService.adicionarTask(this.task).subscribe(res => { 
+    this.tasksService.adicionarTask(_task).subscribe(res => { 
       if(res.status == "ok"){
         this.retornarTasks();
         this.task = new Task();
@@ -45,7 +45,26 @@ export class TasksComponent implements OnInit {
   }
 
   alterarTask(_task: Task){
-    this.tasksService.alterarTask(_task).subscribe(res => { if(res.status == "ok"){this.retornarTasks();} });
+    this.busy = true;
+    this.tasksService.alterarTask(_task).subscribe(res => { 
+      if(res.status == "ok"){
+        this.retornarTasks();
+        this.task = new Task();
+        this.busy = false;
+      } 
+    });
+  }
+
+  alterarInfoTask(_task: Task){
+    this.task = _task;
+  }
+
+  tratarFormTask(form){
+    if(this.task.codigo > 0){
+      this.alterarTask(this.task);
+    }else{
+      this.adicionarTask(this.task);
+    }
   }
 
   /*
@@ -67,13 +86,13 @@ export class TasksComponent implements OnInit {
  */
 export class Task {
   
-  codigo: Number;
-  titulo: String;
-  descricao: String;
-  situacao: Boolean;
-  dataHoraCriacao: String; // A base automáticamente insere "CURRENT_TIMESTAMP" ao realizar o INSERT
-  dataHoraEncerramento: String; // A base automáticamente insere "CURRENT_TIMESTAMP" ao realizar a troca de situação via trigger
-  dataHoraUltimaAlteracao: String; // A base automáticamente insere "CURRENT_TIMESTAMP" ao realizar a mudança de dados via trigger
+  codigo: number;
+  titulo: string;
+  descricao: string;
+  situacao: boolean;
+  dataHoraCriacao: string; // A base automáticamente insere "CURRENT_TIMESTAMP" ao realizar o INSERT
+  dataHoraEncerramento: string; // A base automáticamente insere "CURRENT_TIMESTAMP" ao realizar a troca de situação via trigger
+  dataHoraUltimaAlteracao: string; // A base automáticamente insere "CURRENT_TIMESTAMP" ao realizar a mudança de dados via trigger
 
 
   constructor(){

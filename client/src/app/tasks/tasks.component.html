@@ -15,16 +15,16 @@
     <tr [class.success]="task.situacao == true">
       <th scope="row">{{task.codigo}}</th>
       <td class="col-md-2">{{task.titulo}}</td>
-      <td class="col-md-4">{{task.descricao}}</td>
-      <td class="col-md-3">{{task.dataHoraCriacao}} - {{task.dataHoraEncerramento}}</td>
+      <td class="col-md-4">{{task.descricao}}<div class="clearfix"><span class="label label-info" *ngIf="task.dataHoraUltimaAlteracao">Última alteração: {{task.dataHoraUltimaAlteracao}}</span></div></td>
+      <td class="col-md-3">{{task.dataHoraCriacao}}<span *ngIf="task.dataHoraEncerramento"> - {{task.dataHoraEncerramento}}</span></td>
       <td class="col-md-1"><button (click)="alterarSituacaoTask(task)" type="button" class="btn btn-sm" [class.btn-warning]="task.situacao == true" [class.btn-success]="task.situacao == false"><i class="glyphicon" [class.glyphicon-refresh]="task.situacao == true" [class.glyphicon-ok]="task.situacao == false"></i></button></td>
-      <td class="col-md-1"><button type="button" class="btn btn-info btn-sm"><i class="glyphicon glyphicon-pencil"></i></button></td>
+      <td class="col-md-1"><button (click)="alterarInfoTask(task)" type="button" class="btn btn-info btn-sm"><i class="glyphicon glyphicon-pencil"></i></button></td>
       <td class="col-md-1"><button (click)="removerTask(task.codigo)" type="button" class="btn btn-danger btn-sm"><i class="glyphicon glyphicon-ban-circle"></i></button></td>
     </tr>
   </tbody>
 </table>
 
-<form #f="ngForm" (ngSubmit)="adicionarTask(f)" novalidate>
+<form #f="ngForm" (ngSubmit)="tratarFormTask(f)" novalidate>
   <div class="form-group">
     <label for="titulo">Título</label>
     <input type="text" class="form-control" maxlength="50" name="titulo" required id="titulo" placeholder="Qual o título da tarefa?" [(ngModel)]="task.titulo">
@@ -33,5 +33,5 @@
     <label for="descricao">Descrição</label>
     <textarea id="descricao" name="descricao" maxlength="200" placeholder="Quais as informações da tarefa?" class="form-control" rows="3" [(ngModel)]="task.descricao"></textarea>
   </div>
-  <button type="submit" class="btn btn-info" [disabled]="!f.valid || busy">Adicionar</button>
+  <button type="submit" class="btn btn-info" [disabled]="!f.valid || busy"><span *ngIf="!task.codigo">Adicionar</span><span *ngIf="task.codigo">Alterar</span></button>
 </form>
